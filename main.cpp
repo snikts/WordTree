@@ -35,26 +35,34 @@ std::shared_ptr<WordTree> readDictionary(std::string filename)
 
 int main()
 {
-    //        int howMany = rlutil::trows()-2;
-    //        while(true) {
-    //            char typed = rlutil::getkey();
-    //            for (int j = 1; j < rlutil::trows() - 1; j++)
-    //            {
-    //                std::cout << " " << std::endl;
-    //            }
-    //
-    //
-    //
-    //        }
-    //    while (true)
-    //    {
-    //        //        for (int i = 1; i < rlutil::trows() - 1; ++i)
-    //        //        {
-    //        //            std::cout << " " << std::endl;
-    //        //        }
-    //        rlutil::locate(0, 0);
-    //        char typed = rlutil::getkey();
-    //    }
+    auto theWordTree = readDictionary("dictionary.txt");
+    int howMany = rlutil::trows()-3;
+    std::string wordSoFar = "";
+    while(true) {
+        rlutil::locate(0, 0);
+        char typed = rlutil::getkey();
+        if (typed == rlutil::KEY_BACKSPACE && wordSoFar.size() > 1)
+        {
+            wordSoFar.pop_back();
+        }
+        else
+        {
+            wordSoFar = wordSoFar + typed;
+        }
+        rlutil::cls();
+        std::cout << wordSoFar << std::endl;
+        std::cout << " " << std::endl;
+        std::cout << "--- prediction ---" << std::endl;
+        auto predicted = theWordTree->predict(wordSoFar, howMany);
+        for (int j = 1; j < predicted.size(); j++)
+        {
+            std::cout << predicted[j] << std::endl;
+        }
+    
+    
+    
+    }
+
 
     return 0;
 }
